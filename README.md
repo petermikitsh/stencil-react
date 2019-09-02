@@ -1,6 +1,6 @@
 # stencil-react-bindings
 
-Generate React Components from Stencil 1.x projects.
+Generate React Components ("bindings") from Stencil 1.x projects.
 
 ## Usage
 
@@ -19,7 +19,7 @@ srb @anjuna/core --out-dir dist
 
 Your output directory will contain:
 
-- A `package.json` file with main and module fields
-- Your Stencil-wrapped React Components
+- A `package.json` file with `main`, `module`, and `types` fields
+- A CommonJS Build of your React-wrapped Stencil components
+- An ES Module Build of your React-wrapped Stencil components
 - TypeScript bindings
-
