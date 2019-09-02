@@ -107,7 +107,7 @@ module.exports = (componentClass) => {
         }, {});
         return (
           <${customElementTag} ref={this.ref} {...synEvents}>
-            this.props.children}
+            {this.props.children}
           </${customElementTag}>
         );
       }
