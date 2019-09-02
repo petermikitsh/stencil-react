@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="hero.png">
+</div>
+
 # stencil-react
 
 Generate React Components ("bindings") from Stencil 1.x projects.
