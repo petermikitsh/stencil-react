@@ -8,7 +8,10 @@ const uppercamelcase = require('uppercamelcase');
 const componentToReact = require('./componentToReact');
 const ts = require('typescript');
 const { _: [moduleName], ...opts } = mri(process.argv.slice(2));
-const outDir = opts['out-dir'] || 'dist';
+if (!moduleName) {
+  throw Error('No module supplied. See https://github.com/petermikitsh/stencil-react#usage');
+}
+const outDir = opts.outDir || 'dist';
 const pkgBasePath = path.resolve('node_modules', moduleName);
 const pkgJsonPath = path.resolve(pkgBasePath, 'package.json');
 const pkgJson = require(pkgJsonPath);
@@ -34,19 +37,21 @@ async function main() {
     const reactComponent = componentToReact(componentClass);
     const writePath = path.resolve(outDir, 'tsx', entry).replace('.js', '.tsx');
     const writeDir = path.dirname(writePath);
-    const relativePath = path.relative(__dirname + '/../dist/tsx', writePath);
-    relativeFiles.push('./dist/tsx/' + relativePath);
-    indexFile += `export { ${exportName} } from './${relativePath.replace('.tsx', '')}';\n`
+    const relativePath = path.relative(outDir, path.resolve(outDir, entry));
+    const absPath = path.resolve(outDir, relativePath);
+    relativeFiles.push(absPath);
+    indexFile += `export { ${exportName} } from './${relativePath.replace('.js', '')}';\n`
     await fs.ensureDir(writeDir);
     await fs.writeFile(writePath, reactComponent);
   });
 
   await Promise.all(transforms);
-  await fs.writeFile('./dist/tsx/index.ts', indexFile);
+  const indexPath = path.resolve(outDir, 'tsx/index.ts');
+  await fs.writeFile(indexPath, indexFile);
 
   // Typescript file generation complete.
   // Now to make ES Modules.
-  const files = ['./dist/tsx/index.ts', ...relativeFiles];
+  const files = [indexPath, ...relativeFiles];
   const baseConfig = {
     target: ts.ScriptTarget.ES5,
     importHelpers: true,
@@ -56,9 +61,9 @@ async function main() {
   const esmProgram = ts.createProgram(files, {
     ...baseConfig,
     module: ts.ModuleKind.ESNext,
-    outDir: 'dist/esm',
+    outDir: path.resolve(outDir, 'esm'),
     declaration: true,
-    declarationDir: 'dist/types'
+    declarationDir: path.resolve(outDir, 'types')
   });
   esmProgram.emit();
 
@@ -66,12 +71,13 @@ async function main() {
   const cjsProgram = ts.createProgram(files, {
     ...baseConfig,
     module: ts.ModuleKind.CommonJS,
-    outDir: 'dist/cjs'
+    outDir: path.resolve(outDir, 'cjs')
   });
   cjsProgram.emit();
 
   // Make a package.json file
-  await fs.writeFile('./dist/package.json', outdent`
+  const genPkgJsonPath = path.resolve(outDir, 'package.json');
+  await fs.writeFile(genPkgJsonPath, outdent`
   {
     "name": "${moduleName}-react",
     "description": "${moduleName} Stencil Components for React",
@@ -89,7 +95,7 @@ async function main() {
   `);
 
   // Lastly, cleanup the tsx folder
-  await fs.remove('./dist/tsx');
+  await fs.remove(path.resolve(outDir, 'tsx'));
 }
 
 main();

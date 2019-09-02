@@ -8,7 +8,7 @@ Make sure your Stencil v1 component library (e.g, `@anjuna/core`) is installed a
 
 ```
 npm i stencil-react
-stencil-react @anjuna/core --out-dir dist
+stencil-react @anjuna/core --outDir dist
 ```
 
 Your output directory will contain:
