@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="hero.png">
+  <img src="hero.png" height="250">
 </div>
 
 # stencil-react
