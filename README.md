@@ -18,3 +18,33 @@ Your output directory will contain:
 - A CommonJS build of your React-wrapped Stencil components
 - TypeScript types
 - Source Maps
+
+## Usage (In React)
+
+The generated NPM package is the original, suffixed with `-react`.
+
+All your Stencil Components will be exported from the main/module entry file. E.g., if you had a `Button` component:
+
+```jsx
+import { Button } from '@anjuna/core-react';
+```
+
+Custom properties, custom events, synthentic React events, and aria-attributes are all supported:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const App = (
+  <Button
+    context="primary"
+    anjBlur={(customBlurEvent) => { debugger; }}
+    onClick={(syntheticReactClickEvent) => { debugger; }}
+    aria-label="My ARIA Example"
+  >
+    Hello World
+  </Button>
+);
+
+ReactDOM.render(<App />, document.body);
+```
