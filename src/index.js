@@ -80,6 +80,9 @@ async function main() {
     "types": "./types/index.d.ts",
     "peerDependencies": {
       "${moduleName}": "^${pkgJson.version}"
+    },
+    "dependencies": {
+      "tslib": "^${require('../package.json').devDependencies.tslib}"
     }
   }
   `);

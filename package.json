@@ -29,7 +29,8 @@
     "@stencil/state-tunnel": "1.0.1",
     "@types/react": "16.9.2",
     "popper.js": "1.15.0",
-    "react": "16.9.0"
+    "react": "16.9.0",
+    "tslib": "1.10.0"
   },
   "dependencies": {
     "@babel/core": "7.5.5",
