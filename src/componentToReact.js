@@ -105,10 +105,13 @@ module.exports = (componentClass) => {
           }
           return accumulator;
         }, {});
-        return (
-          <${customElementTag} ref={this.ref} {...synEvents}>
-            {this.props.children}
-          </${customElementTag}>
+        return React.createElement(
+          '${customElementTag}',
+          {
+            ref: this.ref,
+            ...synEvents
+          },
+          this.props.children
         );
       }
     }
