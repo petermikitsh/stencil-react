@@ -73,11 +73,14 @@ async function main() {
   await fs.writeFile('./dist/package.json', outdent`
   {
     "name": "${moduleName}-react",
-    "description": "${moduleName} Components for React",
+    "description": "${moduleName} Stencil Components for React",
     "version": "${pkgJson.version}",
     "main": "./cjs/index.js",
     "module": "./esm/index.js",
-    "types": "./types/index.d.ts"
+    "types": "./types/index.d.ts",
+    "peerDependencies": {
+      "${moduleName}": "^${pkgJson.version}"
+    }
   }
   `);
 
