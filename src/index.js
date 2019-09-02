@@ -50,7 +50,8 @@ async function main() {
   const baseConfig = {
     target: ts.ScriptTarget.ES5,
     importHelpers: true,
-    sourceMap: true
+    sourceMap: true,
+    jsx: ts.JsxEmit.React
   };
   const esmProgram = ts.createProgram(files, {
     ...baseConfig,
