@@ -17,3 +17,4 @@ Your output directory will contain:
 - An ES Module build of your React-wrapped Stencil components
 - A CommonJS build of your React-wrapped Stencil components
 - TypeScript types
+- Source Maps
