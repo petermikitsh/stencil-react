@@ -1,5 +1,4 @@
 const outdent = require('outdent');
-const syntheticEvents = require('./syntheticEvents');
 
 module.exports = (componentClass) => {
   const {
@@ -41,7 +40,6 @@ module.exports = (componentClass) => {
       ref: React.RefObject<any>;
       properties: string[];
       events: string[];
-      syntheticEvents: string[];
 
       constructor(props: ${exportName}Props) {
         super(props);
@@ -54,11 +52,6 @@ module.exports = (componentClass) => {
         this.events = [${iterate(
           events,
           ([key, {method}]) => (`'${method}'`),
-          ', '
-        )}];
-        this.syntheticEvents = [${iterate(
-          syntheticEvents,
-          ([key, event]) => (`'${event}'`),
           ', '
         )}];
       }
@@ -98,18 +91,19 @@ module.exports = (componentClass) => {
       }
 
       render() {
-        const synEvents = this.syntheticEvents.reduce((accumulator: { [s: string]: any; }, key) => {
-          const handler = this.props[key];
-          if (handler) {
-            accumulator[key] = handler;
+        /* Pass all other props, e.g., React Synthetic Events like 'onClick'
+         * or aria attrs like 'aria-label' to custom element
+         */
+        const others = Object.keys(this.props).reduce((accumulator: { [s: string]: any; }, key) => {
+          const isAria = key.indexOf('aria-') === 0;
+          const notCustomProperty = this.properties.indexOf(key) === -1;
+          const notCustomEvent = this.events.indexOf(key) === -1;
+          if (isAria || notCustomProperty && notCustomEvent) {
+            accumulator[key] = this.props[key];
           }
           return accumulator;
         }, {});
-        return (
-          <${customElementTag} ref={this.ref} {...synEvents}>
-            {this.props.children}
-          </${customElementTag}>
-        );
+        return <${customElementTag} ref={this.ref} {...others} />;
       }
     }
 
