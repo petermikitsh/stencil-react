@@ -1,0 +1,5 @@
+# Ignore Everything
+*
+
+# Except...
+!src/*.js
