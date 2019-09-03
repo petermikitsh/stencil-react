@@ -9,6 +9,7 @@
   ],
   "main": "src/index.js",
   "scripts": {
+    "prepublishOnly": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -28,6 +29,7 @@
     "@anjuna/core": "1.0.0-rc.0",
     "@stencil/state-tunnel": "1.0.1",
     "@types/react": "16.9.2",
+    "conventional-changelog-cli": "2.0.23",
     "popper.js": "1.15.0",
     "react": "16.9.0",
     "tslib": "1.10.0"
