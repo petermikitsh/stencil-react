@@ -5,7 +5,7 @@ module.exports = (componentClass) => {
     is: customElementTag,
     properties,
     events,
-    name: exportName
+    name: exportName,
   } = componentClass;
 
   const quote = (str) => {
@@ -14,23 +14,23 @@ module.exports = (componentClass) => {
       return `'${str}'`;
     }
     return str;
-  }
+  };
 
   const iterate = (obj, mapFn, join) => {
     if (!obj) {
       return '';
     }
     return Object.entries(obj).map(mapFn).join(join || `\n${' '.repeat(2)}`);
-  }
+  };
 
   return outdent`
     import React, { Component } from 'react';
 
     interface ${exportName}Props {
       ${iterate(properties, ([key, prop]) => (
-        `${quote(prop.attribute || key)}?: ${prop.complexType.resolved.replace(/\"/g, "'")};`
+        `${quote(prop.attribute || key)}?: ${prop.complexType.resolved.replace(/"/g, "'")};`
       ))}
-      ${iterate(events, ([key, prop]) => (
+      ${iterate(events, ([, prop]) => (
         `${quote(prop.method)}?: Function;`
       ))}
       [key: string]: any;
@@ -46,13 +46,13 @@ module.exports = (componentClass) => {
         this.ref = React.createRef();
         this.properties = [${iterate(
           properties,
-          ([key, {attribute}]) => (`'${attribute || key}'`),
-          ', '
+          ([key, { attribute }]) => (`'${attribute || key}'`),
+          ', ',
         )}];
         this.events = [${iterate(
           events,
-          ([key, {method}]) => (`'${method}'`),
-          ', '
+          ([, { method }]) => (`'${method}'`),
+          ', ',
         )}];
       }
 
@@ -108,4 +108,4 @@ module.exports = (componentClass) => {
     }
 
   `;
-}
+};

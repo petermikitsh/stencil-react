@@ -5,8 +5,9 @@ const mri = require('mri');
 const path = require('path');
 const outdent = require('outdent');
 const uppercamelcase = require('uppercamelcase');
-const componentToReact = require('./componentToReact');
 const ts = require('typescript');
+const componentToReact = require('./componentToReact');
+
 const { _: [moduleName], ...opts } = mri(process.argv.slice(2));
 if (!moduleName) {
   throw Error('No module supplied. See https://github.com/petermikitsh/stencil-react#usage');
@@ -19,7 +20,7 @@ const pkgJson = require(pkgJsonPath);
 require('@babel/register')({
   only: [pkgBasePath],
   plugins: ['@babel/plugin-transform-modules-commonjs'],
-  cache: false
+  cache: false,
 });
 
 async function main() {
@@ -28,7 +29,7 @@ async function main() {
   let indexFile = '';
   const relativeFiles = [];
 
-  const transforms = entries.map(async entry => {
+  const transforms = entries.map(async (entry) => {
     const entryPath = path.resolve(pkgBasePath, 'collection', entry);
     const baseName = path.basename(entryPath, '.js');
     // Assume files named foo-bar.js have named export 'FooBar'
@@ -40,7 +41,7 @@ async function main() {
     const relativePath = path.relative(outDir, path.resolve(outDir, entry));
     const absPath = path.resolve(outDir, relativePath);
     relativeFiles.push(absPath);
-    indexFile += `export { ${exportName} } from './${relativePath.replace('.js', '')}';\n`
+    indexFile += `export { ${exportName} } from './${relativePath.replace('.js', '')}';\n`;
     await fs.ensureDir(writeDir);
     await fs.writeFile(writePath, reactComponent);
   });
@@ -56,14 +57,14 @@ async function main() {
     target: ts.ScriptTarget.ES5,
     importHelpers: true,
     sourceMap: true,
-    jsx: ts.JsxEmit.React
+    jsx: ts.JsxEmit.React,
   };
   const esmProgram = ts.createProgram(files, {
     ...baseConfig,
     module: ts.ModuleKind.ESNext,
     outDir: path.resolve(outDir, 'esm'),
     declaration: true,
-    declarationDir: path.resolve(outDir, 'types')
+    declarationDir: path.resolve(outDir, 'types'),
   });
   esmProgram.emit();
 
@@ -71,7 +72,7 @@ async function main() {
   const cjsProgram = ts.createProgram(files, {
     ...baseConfig,
     module: ts.ModuleKind.CommonJS,
-    outDir: path.resolve(outDir, 'cjs')
+    outDir: path.resolve(outDir, 'cjs'),
   });
   cjsProgram.emit();
 

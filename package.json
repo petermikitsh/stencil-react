@@ -9,6 +9,7 @@
   ],
   "main": "src/index.js",
   "scripts": {
+    "lint": "eslint src/**/*.js",
     "prepublishOnly": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +31,12 @@
     "@stencil/state-tunnel": "1.0.1",
     "@types/react": "16.9.2",
     "conventional-changelog-cli": "2.0.23",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "popper.js": "1.15.0",
     "react": "16.9.0",
     "tslib": "1.10.0"
