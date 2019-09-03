@@ -12,7 +12,7 @@
     "coverage:open": "open coverage/index.html",
     "coverage:report": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint src/**/*.js",
-    "prepublishOnly": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "test": "jest"
   },
   "bin": {
