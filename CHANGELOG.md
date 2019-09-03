@@ -1,3 +1,7 @@
+## [0.0.1-1](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-0...v0.0.1-1) (2019-09-03)
+
+
+
 ## [0.0.1-0](https://github.com/petermikitsh/stencil-react/compare/fa98a4d...v0.0.1-0) (2019-09-02)
 
 
