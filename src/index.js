@@ -96,7 +96,7 @@ async function main() {
   `);
 
   // Lastly, cleanup the tsx folder
-  await fs.remove(path.resolve(outDir, 'tsx'));
+  return fs.remove(path.resolve(outDir, 'tsx'));
 }
 
-main();
+module.exports = main();
