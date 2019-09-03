@@ -1,6 +1,6 @@
-<div align="center">
+<p align="center">
   <img src="hero.png" height="250">
-</div>
+</p>
 
 # stencil-react
 
