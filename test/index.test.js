@@ -44,7 +44,7 @@ test('Generate new NPM package: fail when no name supplied', async () => {
 
 
 test('Generate new NPM package', async () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(20000);
   process.argv.push('@anjuna/core');
   await require('../src/index.js');
 });
