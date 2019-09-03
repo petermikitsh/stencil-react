@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "scripts": {
     "coverage:open": "open coverage/index.html",
+    "coverage:report": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint src/**/*.js",
     "prepublishOnly": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "test": "jest"
@@ -32,6 +33,7 @@
     "@stencil/state-tunnel": "1.0.1",
     "@types/react": "16.9.2",
     "conventional-changelog-cli": "2.0.23",
+    "coveralls": "^3.0.6",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
