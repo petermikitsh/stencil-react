@@ -1,3 +1,12 @@
+## [0.0.1-3](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-2...v0.0.1-3) (2019-09-04)
+
+
+### Bug Fixes
+
+* keep tsx files (for source map support) ([3c65bd0](https://github.com/petermikitsh/stencil-react/commit/3c65bd0))
+
+
+
 ## [0.0.1-2](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-1...v0.0.1-2) (2019-09-04)
 
 
