@@ -28,7 +28,7 @@ module.exports = (componentClass) => {
 
     interface ${exportName}Props {
       ${iterate(properties, ([key, prop]) => (
-        `${quote(prop.attribute || key)}?: ${prop.complexType.resolved.replace(/"/g, "'")};`
+        `${quote(key)}?: ${prop.complexType.resolved.replace(/"/g, "'")};`
       ))}
       ${iterate(events, ([, prop]) => (
         `${quote(prop.method)}?: Function;`
@@ -46,7 +46,7 @@ module.exports = (componentClass) => {
         this.ref = React.createRef();
         this.properties = [${iterate(
           properties,
-          ([key, { attribute }]) => (`'${attribute || key}'`),
+          ([key]) => (`'${key}'`),
           ', ',
         )}];
         this.events = [${iterate(
