@@ -1,6 +1,6 @@
 {
   "name": "stencil-react",
-  "version": "0.0.1-1",
+  "version": "0.0.1-2",
   "description": "CLI tool to generate React bindings for Stencil v1 Components",
   "keywords": [
     "stencil",
