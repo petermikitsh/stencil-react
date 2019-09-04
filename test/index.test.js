@@ -42,9 +42,16 @@ test('Generate new NPM package: fail when no name supplied', async () => {
   }
 });
 
-
-test('Generate new NPM package', async () => {
+test('Generate new NPM package: @anjuna/core', async () => {
   jest.setTimeout(20000);
   process.argv.push('@anjuna/core');
   await require('../src/index.js');
+  process.argv.pop();
+});
+
+test('Generate new NPM package: d3-stencil', async () => {
+  jest.setTimeout(20000);
+  process.argv.push('d3-stencil');
+  await require('../src/index.js');
+  process.argv.pop();
 });

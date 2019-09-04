@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const mri = require('mri');
 const path = require('path');
 const outdent = require('outdent');
-const uppercamelcase = require('uppercamelcase');
 const ts = require('typescript');
 const componentToReact = require('./componentToReact');
 
@@ -32,10 +31,12 @@ async function main() {
 
   const transforms = entries.map(async (entry) => {
     const entryPath = path.resolve(collectionDir, entry);
-    const baseName = path.basename(entryPath, '.js');
-    // Assume files named foo-bar.js have named export 'FooBar'
-    const exportName = uppercamelcase(baseName);
-    const componentClass = require(entryPath)[exportName];
+    const componentFile = require(entryPath);
+    if (Object.keys(componentFile).length > 1) {
+      console.log('⚠️ Entry file has more than one export. This is not expected.');
+    }
+    const exportName = Object.keys(componentFile)[0];
+    const componentClass = componentFile[exportName];
     const reactComponent = componentToReact(componentClass);
     const writePath = path.resolve(outDir, 'tsx', entry).replace('.js', '.tsx');
     const writeDir = path.dirname(writePath);

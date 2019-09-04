@@ -8,9 +8,9 @@ module.exports = {
     'text-summary',
     'html',
   ],
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   transformIgnorePatterns: [
-    '/node_modules/(?!@anjuna/core).+\\.js$',
+    '/node_modules/(?!(@anjuna/core|d3-stencil)).+\\.js$',
   ],
   verbose: true,
 };

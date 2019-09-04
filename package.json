@@ -34,6 +34,7 @@
     "@types/react": "16.9.2",
     "conventional-changelog-cli": "2.0.23",
     "coveralls": "^3.0.6",
+    "d3-stencil": "2.2.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -54,7 +55,6 @@
     "fs-extra": "8.1.0",
     "mri": "1.1.4",
     "outdent": "0.7.0",
-    "typescript": "3.6.2",
-    "uppercamelcase": "3.0.0"
+    "typescript": "3.6.2"
   }
 }
