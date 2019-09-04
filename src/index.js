@@ -94,9 +94,6 @@ async function main() {
     }
   }
   `);
-
-  // Lastly, cleanup the tsx folder
-  return fs.remove(path.resolve(outDir, 'tsx'));
 }
 
 module.exports = main();
