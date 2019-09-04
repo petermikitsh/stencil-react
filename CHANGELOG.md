@@ -1,3 +1,12 @@
+## [0.0.1-5](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-4...v0.0.1-5) (2019-09-04)
+
+
+### Bug Fixes
+
+* find entry files relative to collection manifest directory ([fa7cfb1](https://github.com/petermikitsh/stencil-react/commit/fa7cfb1))
+
+
+
 ## [0.0.1-4](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-3...v0.0.1-4) (2019-09-04)
 
 
