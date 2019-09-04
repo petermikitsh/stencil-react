@@ -25,12 +25,13 @@ require('@babel/register')({
 
 async function main() {
   const collectionPath = path.resolve(pkgBasePath, pkgJson.collection);
+  const collectionDir = path.dirname(collectionPath);
   const { entries } = require(collectionPath);
   let indexFile = '';
   const relativeFiles = [];
 
   const transforms = entries.map(async (entry) => {
-    const entryPath = path.resolve(pkgBasePath, 'collection', entry);
+    const entryPath = path.resolve(collectionDir, entry);
     const baseName = path.basename(entryPath, '.js');
     // Assume files named foo-bar.js have named export 'FooBar'
     const exportName = uppercamelcase(baseName);
