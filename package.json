@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/petermikitsh/stencil-react/issues"
   },
-  "homepage": "https://github.com/petermikitsh/stencil-react#readme",
+  "homepage": "http://blog.mikit.sh/post/React-Bindings-For-Stencil-Components/",
   "devDependencies": {
     "@anjuna/core": "1.0.0-rc.0",
     "@stencil/state-tunnel": "1.0.1",
