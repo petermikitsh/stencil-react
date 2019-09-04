@@ -1,3 +1,12 @@
+## [0.0.1-4](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-3...v0.0.1-4) (2019-09-04)
+
+
+### Bug Fixes
+
+* use camelCase property names instead of kebab-case ([022f50a](https://github.com/petermikitsh/stencil-react/commit/022f50a))
+
+
+
 ## [0.0.1-3](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-2...v0.0.1-3) (2019-09-04)
 
 
