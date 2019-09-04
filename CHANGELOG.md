@@ -1,3 +1,12 @@
+## [0.0.1-6](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-5...v0.0.1-6) (2019-09-04)
+
+
+### Bug Fixes
+
+* get class name directly from file; add d3-stencil test ([e49ecbe](https://github.com/petermikitsh/stencil-react/commit/e49ecbe))
+
+
+
 ## [0.0.1-5](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-4...v0.0.1-5) (2019-09-04)
 
 
