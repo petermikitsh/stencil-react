@@ -32,9 +32,6 @@ async function main() {
   const transforms = entries.map(async (entry) => {
     const entryPath = path.resolve(collectionDir, entry);
     const componentFile = require(entryPath);
-    if (Object.keys(componentFile).length > 1) {
-      console.log('⚠️ Entry file has more than one export. This is not expected.');
-    }
     const exportName = Object.keys(componentFile)[0];
     const componentClass = componentFile[exportName];
     const reactComponent = componentToReact(componentClass);
