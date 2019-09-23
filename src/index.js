@@ -3,8 +3,12 @@
 const fs = require('fs-extra');
 const mri = require('mri');
 const path = require('path');
-const outdent = require('outdent');
 const ts = require('typescript');
+const prettier = require('prettier');
+const {
+  omit,
+} = require('lodash');
+
 const componentToReact = require('./componentToReact');
 
 const { _: [moduleName], ...opts } = mri(process.argv.slice(2));
@@ -79,23 +83,33 @@ async function main() {
   cjsProgram.emit();
 
   // Make a package.json file
+  const cliPkgJsonOverride = JSON.parse(opts.packageJson || '{ }');
   const genPkgJsonPath = path.resolve(outDir, 'package.json');
-  await fs.writeFile(genPkgJsonPath, outdent`
-  {
-    "name": "${moduleName}-react",
-    "description": "${moduleName} Stencil Components for React",
-    "version": "${pkgJson.version}",
-    "main": "./cjs/index.js",
-    "module": "./esm/index.js",
-    "types": "./types/index.d.ts",
-    "peerDependencies": {
-      "${moduleName}": "^${pkgJson.version}"
+  const finalPkgJsonObj = {
+    name: `${moduleName}-react`,
+    description: `${moduleName} Stencil Components for React`,
+    version: `${pkgJson.version}`,
+    main: './cjs/index.js',
+    module: './esm/index.js',
+    types: './types/index.d.ts',
+    peerDependencies: {
+      [moduleName]: `^${pkgJson.version}`,
     },
-    "dependencies": {
-      "tslib": "^${require('../package.json').devDependencies.tslib}"
-    }
-  }
-  `);
+    dependencies: {
+      tslib: `^${require('../package.json').devDependencies.tslib}`,
+    },
+    ...omit(cliPkgJsonOverride, 'main', 'module', 'types', 'peerDependencies', 'dependencies'),
+  };
+  console.log(finalPkgJsonObj);
+  await fs.writeFile(
+    genPkgJsonPath,
+    prettier.format(
+      JSON.stringify(finalPkgJsonObj),
+      {
+        parser: 'json',
+      },
+    ),
+  );
 }
 
 module.exports = main();
