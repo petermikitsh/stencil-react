@@ -100,7 +100,6 @@ async function main() {
     },
     ...omit(cliPkgJsonOverride, 'main', 'module', 'types', 'peerDependencies', 'dependencies'),
   };
-  console.log(finalPkgJsonObj);
   await fs.writeFile(
     genPkgJsonPath,
     prettier.format(
