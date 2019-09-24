@@ -61,7 +61,7 @@ describe('CLI npm package generation', () => {
   });
 
   it('should generate package inside /dist if no --outDir provided', async () => {
-    jest.setTimeout(20000);
+    jest.setTimeout(30000);
 
     process.argv.push('@anjuna/core');
     await require('../src/index.js');
@@ -72,7 +72,7 @@ describe('CLI npm package generation', () => {
   });
 
   it('should generate in correct directory if --outDir provided', async () => {
-    jest.setTimeout(20000);
+    jest.setTimeout(30000);
 
     process.argv.push('d3-stencil', '--outDir', 'test_output/outdir');
     await require('../src/index.js');
@@ -83,7 +83,7 @@ describe('CLI npm package generation', () => {
   });
 
   it('should generate packge with correct package.json if --packageJson provided', async () => {
-    jest.setTimeout(20000);
+    jest.setTimeout(30000);
 
     process.argv.push(
       'd3-stencil',
