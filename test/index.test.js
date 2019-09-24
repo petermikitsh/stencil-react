@@ -81,4 +81,23 @@ describe('CLI npm package generation', () => {
     const json = require(path.resolve(__dirname, '../test_output/outdir/package.json'));
     expect(json.name).toBe('d3-stencil-react');
   });
+
+  it('should generate packge with correct package.json if --packageJson provided', async () => {
+    jest.setTimeout(20000);
+
+    process.argv.push(
+      'd3-stencil',
+      '--outDir',
+      'test_output/packageJson',
+      '--packageJson',
+      JSON.stringify({
+        name: 'd3-stencil-react-binding',
+      }),
+    );
+    await require('../src/index.js');
+    process.argv.splice(-5, 5);
+
+    const json = require(path.resolve(__dirname, '../test_output/packageJson/package.json'));
+    expect(json.name).toBe('d3-stencil-react-binding');
+  });
 });
