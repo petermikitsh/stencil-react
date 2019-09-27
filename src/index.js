@@ -10,6 +10,9 @@ const {
 } = require('lodash');
 
 const componentToReact = require('./componentToReact');
+const {
+  ignoredPkgJsonOverrideFields,
+} = require('./constants');
 
 const { _: [moduleName], ...opts } = mri(process.argv.slice(2));
 if (!moduleName) {
@@ -83,7 +86,14 @@ async function main() {
   cjsProgram.emit();
 
   // Make a package.json file
-  const cliPkgJsonOverride = JSON.parse(opts.packageJson || '{ }');
+  let jsonOverride = JSON.parse(opts.packageJson || '{ }');
+  const cliPkgJsonOverridePath = opts.packageJsonPath;
+  if (cliPkgJsonOverridePath !== undefined) {
+    jsonOverride = {
+      ...require(path.resolve(cliPkgJsonOverridePath)) || { },
+      ...jsonOverride,
+    };
+  }
   const genPkgJsonPath = path.resolve(outDir, 'package.json');
   const finalPkgJsonObj = {
     name: `${moduleName}-react`,
@@ -98,7 +108,10 @@ async function main() {
     dependencies: {
       tslib: `^${require('../package.json').devDependencies.tslib}`,
     },
-    ...omit(cliPkgJsonOverride, 'main', 'module', 'types', 'peerDependencies', 'dependencies'),
+    ...omit(
+      jsonOverride,
+      ...ignoredPkgJsonOverrideFields,
+    ),
   };
   await fs.writeFile(
     genPkgJsonPath,

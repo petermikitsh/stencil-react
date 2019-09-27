@@ -2,6 +2,10 @@ const rimraf = require('rimraf');
 const path = require('path');
 
 const componentToReact = require('../src/componentToReact');
+const testPkgOverride = require('./pkgOverride.test.json');
+const {
+  ignoredPkgJsonOverrideFields,
+} = require('../src/constants');
 
 beforeEach(() => {
   jest.resetModules();
@@ -82,6 +86,25 @@ describe('CLI npm package generation', () => {
     expect(json.name).toBe('d3-stencil-react');
   });
 
+  /**
+   * Validate package.json by checking all the override fileds except ignored ones are same.
+   *
+   * @param {object} overrideSource The json used for override.
+   * @param {object} outputJson The package.json output.
+   */
+  function compareJsonWithOverrideSource(
+    overrideSource,
+    outputJson,
+  ) {
+    Object.keys(overrideSource).forEach((key) => {
+      if (ignoredPkgJsonOverrideFields.indexOf(key) !== -1) {
+        expect(outputJson[key]).not.toEqual(testPkgOverride[key]);
+      } else {
+        expect(outputJson[key]).toEqual(testPkgOverride[key]);
+      }
+    });
+  }
+
   it('should generate packge with correct package.json if --packageJson provided', async () => {
     jest.setTimeout(30000);
 
@@ -90,14 +113,35 @@ describe('CLI npm package generation', () => {
       '--outDir',
       'test_output/packageJson',
       '--packageJson',
-      JSON.stringify({
-        name: 'd3-stencil-react-binding',
-      }),
+      JSON.stringify(testPkgOverride),
     );
     await require('../src/index.js');
     process.argv.splice(-5, 5);
 
     const json = require(path.resolve(__dirname, '../test_output/packageJson/package.json'));
-    expect(json.name).toBe('d3-stencil-react-binding');
+    compareJsonWithOverrideSource(
+      testPkgOverride,
+      json,
+    );
+  });
+
+  it('should generate packge with correct package.json if --packageJsonPath provided', async () => {
+    jest.setTimeout(30000);
+
+    process.argv.push(
+      '@anjuna/core',
+      '--outDir',
+      'test_output/packageJsonPath',
+      '--packageJsonPath',
+      './test/pkgOverride.test.json',
+    );
+    await require('../src/index.js');
+    process.argv.splice(-5, 5);
+
+    const json = require(path.resolve(__dirname, '../test_output/packageJsonPath/package.json'));
+    compareJsonWithOverrideSource(
+      testPkgOverride,
+      json,
+    );
   });
 });
