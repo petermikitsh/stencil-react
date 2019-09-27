@@ -89,8 +89,14 @@ async function main() {
   let jsonOverride = JSON.parse(opts.packageJson || '{ }');
   const cliPkgJsonOverridePath = opts.packageJsonPath;
   if (cliPkgJsonOverridePath !== undefined) {
+    let override = { };
+    try {
+      override = require(path.resolve(cliPkgJsonOverridePath));
+    } catch (e) {
+      console.warn(e);
+    }
     jsonOverride = {
-      ...require(path.resolve(cliPkgJsonOverridePath)) || { },
+      ...override,
       ...jsonOverride,
     };
   }

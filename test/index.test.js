@@ -144,4 +144,23 @@ describe('CLI npm package generation', () => {
       json,
     );
   });
+
+  it('should not apply any override to package.json if provide a wrong --packageJsonPath', async () => {
+    jest.setTimeout(30000);
+
+    process.argv.push(
+      '@anjuna/core',
+      '--outDir',
+      'test_output/wrongPackageJsonPath',
+      '--packageJsonPath',
+      './test/pkgOverride.test.wrong.json',
+    );
+    await require('../src/index.js');
+    process.argv.splice(-5, 5);
+
+    const json = require(path.resolve(__dirname, '../test_output/wrongPackageJsonPath/package.json'));
+    Object.keys(testPkgOverride).forEach((key) => {
+      expect(json[key]).not.toEqual(testPkgOverride[key]);
+    });
+  });
 });
