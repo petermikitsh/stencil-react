@@ -59,9 +59,7 @@ module.exports = (componentClass) => {
       componentDidMount() {
         this.properties.forEach((property) => {
           const propertyValue = this.props[property];
-          if (propertyValue) {
-            this.ref.current[property] = propertyValue;
-          }
+          this.ref.current[property] = propertyValue;
         });
 
         this.events.forEach((event) => {
@@ -75,9 +73,7 @@ module.exports = (componentClass) => {
       componentDidUpdate(prevProps: ${exportName}Props) {
         this.properties.forEach((property) => {
           const propertyValue = this.props[property];
-          if (prevProps[property] !== propertyValue) {
-            this.ref.current[property] = propertyValue;
-          }
+          this.ref.current[property] = propertyValue;
         });
 
         this.events.forEach((event) => {
