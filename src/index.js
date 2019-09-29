@@ -86,7 +86,15 @@ async function main() {
   cjsProgram.emit();
 
   // Make a package.json file
-  let jsonOverride = JSON.parse(opts.packageJson || '{ }');
+  let jsonOverride = (() => {
+    try {
+      return JSON.parse(opts.packageJson || '{ }');
+    } catch (e) {
+      console.log('⚠️ Unable to parse --packageJson option. Ignoring input.');
+      return {};
+    }
+  })();
+  
   const cliPkgJsonOverridePath = opts.packageJsonPath;
   if (cliPkgJsonOverridePath !== undefined) {
     let override = { };
