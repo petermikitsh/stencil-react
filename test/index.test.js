@@ -105,7 +105,7 @@ describe('CLI npm package generation', () => {
     });
   }
 
-  it('should generate packge with correct package.json if --packageJson provided', async () => {
+  it('should generate package with correct package.json if --packageJson provided', async () => {
     jest.setTimeout(30000);
 
     process.argv.push(
@@ -125,7 +125,7 @@ describe('CLI npm package generation', () => {
     );
   });
 
-  it('should generate packge with correct package.json if --packageJsonPath provided', async () => {
+  it('should generate package with correct package.json if --packageJsonPath provided', async () => {
     jest.setTimeout(30000);
 
     process.argv.push(
@@ -145,7 +145,7 @@ describe('CLI npm package generation', () => {
     );
   });
 
-  it('should not apply any override to package.json if provide a wrong --packageJsonPath', async () => {
+  it('should not apply any override to package.json if provide a non-existent --packageJsonPath', async () => {
     jest.setTimeout(30000);
 
     process.argv.push(
