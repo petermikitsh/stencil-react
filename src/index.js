@@ -3,9 +3,16 @@
 const fs = require('fs-extra');
 const mri = require('mri');
 const path = require('path');
-const outdent = require('outdent');
 const ts = require('typescript');
+const prettier = require('prettier');
+const {
+  omit,
+} = require('lodash');
+
 const componentToReact = require('./componentToReact');
+const {
+  ignoredPkgJsonOverrideFields,
+} = require('./constants');
 
 const { _: [moduleName], ...opts } = mri(process.argv.slice(2));
 if (!moduleName) {
@@ -76,23 +83,56 @@ async function main() {
   cjsProgram.emit();
 
   // Make a package.json file
-  const genPkgJsonPath = path.resolve(outDir, 'package.json');
-  await fs.writeFile(genPkgJsonPath, outdent`
-  {
-    "name": "${moduleName}-react",
-    "description": "${moduleName} Stencil Components for React",
-    "version": "${pkgJson.version}",
-    "main": "./cjs/index.js",
-    "module": "./esm/index.js",
-    "types": "./types/index.d.ts",
-    "peerDependencies": {
-      "${moduleName}": "^${pkgJson.version}"
-    },
-    "dependencies": {
-      "tslib": "^${require('../package.json').devDependencies.tslib}"
+  let jsonOverride = (() => {
+    try {
+      return JSON.parse(opts.packageJson || '{ }');
+    } catch (e) {
+      console.log('⚠️ Unable to parse --packageJson option. Ignoring input.');
+      return {};
     }
+  })();
+  
+  const cliPkgJsonOverridePath = opts.packageJsonPath;
+  if (cliPkgJsonOverridePath !== undefined) {
+    let override = { };
+    try {
+      override = require(path.resolve(cliPkgJsonOverridePath));
+    } catch (e) {
+      console.warn(e);
+    }
+    jsonOverride = {
+      ...override,
+      ...jsonOverride,
+    };
   }
-  `);
+  const genPkgJsonPath = path.resolve(outDir, 'package.json');
+  const finalPkgJsonObj = {
+    name: `${moduleName}-react`,
+    description: `${moduleName} Stencil Components for React`,
+    version: `${pkgJson.version}`,
+    main: './cjs/index.js',
+    module: './esm/index.js',
+    types: './types/index.d.ts',
+    peerDependencies: {
+      [moduleName]: `^${pkgJson.version}`,
+    },
+    dependencies: {
+      tslib: `^${require('../package.json').devDependencies.tslib}`,
+    },
+    ...omit(
+      jsonOverride,
+      ...ignoredPkgJsonOverrideFields,
+    ),
+  };
+  await fs.writeFile(
+    genPkgJsonPath,
+    prettier.format(
+      JSON.stringify(finalPkgJsonObj),
+      {
+        parser: 'json',
+      },
+    ),
+  );
 }
 
 module.exports = main();

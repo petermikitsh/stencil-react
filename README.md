@@ -20,6 +20,18 @@ npm i stencil-react
 stencil-react @anjuna/core --outDir dist
 ```
 
+### Options
+
+| Option              | Description                                   | Default Value |
+|---------------------|-----------------------------------------------|---------------|
+| `--outDir`          | Output directory                              | `dist`        |
+| `--packageJson`     | Override output package.json fields           | N/A           |
+| `--packageJsonPath` | Override output package.json fields from file | N/A           |
+
+You cannot override fields `['main', 'module', 'types', 'peerDependencies', 'dependencies']`.
+
+### Output
+
 Your output directory will contain:
 
 - A `package.json` file with `main`, `module`, and `types` fields

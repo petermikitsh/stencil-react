@@ -1,0 +1,8 @@
+{
+  "name": "override-package-name",
+  "main": "./src/empty.js",
+  "module": "./dir/index.js",
+  "types": "./types/type.d.ts",
+  "peerDependencies": { },
+  "dependencies": { }
+}
