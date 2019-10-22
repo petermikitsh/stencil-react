@@ -1,3 +1,7 @@
+# Update
+
+**Check out https://github.com/ionic-team/stencil-ds-plugins**. You may want that instead of this.
+
 <p align="center">
   <img src="hero.png" height="250">
 </p>
