@@ -1,3 +1,17 @@
+## [0.0.1-7](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-6...v0.0.1-7) (2019-10-28)
+
+
+### Bug Fixes
+
+* always set properties (closes [#4](https://github.com/petermikitsh/stencil-react/issues/4)) ([#6](https://github.com/petermikitsh/stencil-react/issues/6)) ([7e432f2](https://github.com/petermikitsh/stencil-react/commit/7e432f2))
+
+
+### Features
+
+* --packageJson and --packageJsonPath options ([8a1b0cc](https://github.com/petermikitsh/stencil-react/commit/8a1b0cc))
+
+
+
 ## [0.0.1-6](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-5...v0.0.1-6) (2019-09-04)
 
 
