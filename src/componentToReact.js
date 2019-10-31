@@ -72,8 +72,11 @@ module.exports = (componentClass) => {
 
       componentDidUpdate(prevProps: ${exportName}Props) {
         this.properties.forEach((property) => {
-          const propertyValue = this.props[property];
-          this.ref.current[property] = propertyValue;
+          const prevProp = prevProps[property];
+          const currProp = this.props[property];
+          if (prevProp !== currProp) {
+            this.ref.current[property] = currProp;
+          }
         });
 
         this.events.forEach((event) => {
