@@ -1,3 +1,12 @@
+## [0.0.1-8](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-7...v0.0.1-8) (2019-10-31)
+
+
+### Bug Fixes
+
+* **componentToReact:** reassign properties only on change ([2f82108](https://github.com/petermikitsh/stencil-react/commit/2f82108))
+
+
+
 ## [0.0.1-7](https://github.com/petermikitsh/stencil-react/compare/v0.0.1-6...v0.0.1-7) (2019-10-28)
 
 
